@@ -3,7 +3,7 @@ import customtkinter as ctk
 
 
 
-username = 'Hello ' + 'Rupali'
+username = 'Hello ' + 'Aditya'
 
 def frontend_initiliesd():
     # Selecting GUI theme - dark, light, system (for system default)
