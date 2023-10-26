@@ -33,7 +33,6 @@ def loginpage(app):
     global login_button, signup_button, or_label
     
     if back_button:
-        print("back detected")
         back_button.place_forget()
         
     label = ctk.CTkLabel(master=app, text='Welcome')
