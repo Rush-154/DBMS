@@ -113,6 +113,11 @@ def login():
 
     if validate_username and validate_password:
         tkmb.showinfo(title="Login Successful", message="You have logged in Successfully")
+        with open("username.txt", "w") as file:
+            file.write(db.get_user_by_value(entered_username))
+            file.close()
+        subprocess.run(['python', 'after_login.py'])
+        
     else:
         tkmb.showerror(title="Login Failed", message="Invalid Username or password")
 
