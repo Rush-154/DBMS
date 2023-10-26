@@ -14,6 +14,7 @@ complete_signup_button = None
 login_button = None
 signup_button = None
 or_label = None
+back_button = None
 
 #__________________________________________________________________________________________
 def frontend_initiliesd():
@@ -30,6 +31,11 @@ def frontend_initiliesd():
 
 def loginpage(app):
     global login_button, signup_button, or_label
+    
+    if back_button:
+        print("back detected")
+        back_button.place_forget()
+        
     label = ctk.CTkLabel(master=app, text='Welcome')
     label.place(relx=0.5, rely=0.3, anchor="center")
 
@@ -43,7 +49,7 @@ def loginpage(app):
     signup_button.place(relx=0.58, rely=0.45, anchor="center")
 
 def login_or_signup(action):    
-    global user_entry, user_pass, name_entry, email_entry, phone_entry, complete_login_button, login_button, signup_button, or_label
+    global user_entry, user_pass, name_entry, email_entry, phone_entry, complete_login_button, complete_signup_button, login_button, signup_button, or_label, back_button
     
     if action == "login":
         login_button.place_forget()
@@ -59,6 +65,9 @@ def login_or_signup(action):
         complete_login_button = ctk.CTkButton(master=app, text='Login', command=login)
         complete_login_button.place(relx=0.5, rely=0.6, anchor="center")
 
+        back_button = ctk.CTkButton(master=app, text='Back', command=back)
+        back_button.place(relx=0.5, rely=0.7, anchor="center")
+        
     elif action == "signup":
         login_button.place_forget()
         signup_button.place_forget()
@@ -78,6 +87,10 @@ def login_or_signup(action):
         
         complete_signup_button = ctk.CTkButton(master=app, text='Complete Signup', command=complete_signup)
         complete_signup_button.place(relx=0.5, rely=0.7, anchor="center")
+
+        back_button = ctk.CTkButton(master=app, text='Back', command=back)
+        back_button.place(relx=0.5, rely=0.8, anchor="center")
+
 
 def complete_signup():
     global name_entry, email_entry, phone_entry, user_pass  # Define them as global
@@ -105,8 +118,24 @@ def login():
         tkmb.showerror(title="Login Failed", message="Invalid Username or password")
 
 def back():
+    if user_entry:
+        user_entry.place_forget()
+    if user_pass:
+        user_pass.place_forget()
+    if complete_login_button:
+        complete_login_button.place_forget()
+    if complete_signup_button:
+        complete_signup_button.place_forget()
+    if name_entry:
+        name_entry.place_forget()
+    if email_entry:
+        email_entry.place_forget()
+    if phone_entry:
+        phone_entry.place_forget()
 
     loginpage(app)
+    
+
 
 # The rest of your code remains unchanged.
 
