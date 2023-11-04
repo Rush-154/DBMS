@@ -2,7 +2,6 @@ import customtkinter as ctk
 import tkinter.messagebox as tkmb
 import databases as db
 import subprocess
-import tkinter
 
 
 # Define the name, email, and phone entry fields as global variables
@@ -129,8 +128,9 @@ def login():
     if validate_username and validate_password:
         tkmb.showinfo(title="Login Successful", message="You have logged in Successfully")
         with open("username.txt", "w") as file:
-            file.write(db.get_user_by_value(entered_username))
+            file.write(db.get_email_id_by_value(entered_username))
             file.close()
+        db.conn.commit()
         app.destroy()
         import after_login
         
