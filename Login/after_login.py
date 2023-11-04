@@ -16,8 +16,8 @@ username = 'Hello ' + name
 if attd.check_email_exists(emails):
     attd.insert_user(emails, name)
 attd.display_users()
-attd.conn.commit()
-attd.conn.close()
+
+
 
 
 def frontend_initiliesd():
@@ -61,6 +61,8 @@ def create_class():
     result= popup.exec()
     if result == cards.QDialog.Accepted:
         subject_name , teacher_name , num_students = popup.create_class_data()
+        attd.insert_subject(subject_name,emails)
+        attd.display_subjects()
 
 apps = frontend_initiliesd()
 structure()
