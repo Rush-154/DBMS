@@ -2,6 +2,8 @@ import customtkinter as ctk
 import tkinter.messagebox as tkmb
 import databases as db
 import subprocess
+import tkinter
+
 
 # Define the name, email, and phone entry fields as global variables
 user_entry = None
@@ -15,6 +17,8 @@ login_button = None
 signup_button = None
 or_label = None
 back_button = None
+checkbox_value = None
+
 
 #__________________________________________________________________________________________
 def frontend_initiliesd():
@@ -48,7 +52,7 @@ def loginpage(app):
     signup_button.place(relx=0.58, rely=0.45, anchor="center")
 
 def login_or_signup(action):    
-    global user_entry, user_pass, name_entry, email_entry, phone_entry, complete_login_button, complete_signup_button, login_button, signup_button, or_label, back_button
+    global user_entry, user_pass, name_entry, email_entry, phone_entry, complete_login_button, complete_signup_button, login_button, signup_button, or_label, back_button, checkbox_value
     
     if action == "login":
         login_button.place_forget()
@@ -73,22 +77,28 @@ def login_or_signup(action):
         or_label.place_forget()
         
         name_entry = ctk.CTkEntry(master=app, placeholder_text="Name")
-        name_entry.place(relx=0.5, rely=0.3, anchor="center")
+        name_entry.place(relx=0.5, rely=0.2, anchor="center")
         
         user_pass = ctk.CTkEntry(master=app, placeholder_text="Password", show="*")
-        user_pass.place(relx=0.5, rely=0.4, anchor="center")
+        user_pass.place(relx=0.5, rely=0.3, anchor="center")
         
         email_entry = ctk.CTkEntry(master=app, placeholder_text="Email")
-        email_entry.place(relx=0.5, rely=0.5, anchor="center")
+        email_entry.place(relx=0.5, rely=0.4, anchor="center")
         
         phone_entry = ctk.CTkEntry(master=app, placeholder_text="Phone Number")
-        phone_entry.place(relx=0.5, rely=0.6, anchor="center")
+        phone_entry.place(relx=0.5, rely=0.5, anchor="center")
         
         complete_signup_button = ctk.CTkButton(master=app, text='Complete Signup', command=complete_signup)
-        complete_signup_button.place(relx=0.5, rely=0.7, anchor="center")
-
+        complete_signup_button.place(relx=0.5, rely=0.6, anchor="center")
+        
         back_button = ctk.CTkButton(master=app, text='Back', command=back)
         back_button.place(relx=0.5, rely=0.8, anchor="center")
+        
+        checkbox_value = ctk.StringVar(value="off")
+        checkbox = ctk.CTkCheckBox(master=app, text="Signup as GFM", variable=checkbox_value, onvalue="on", offvalue="off")
+        checkbox.place(relx=0.5, rely=0.7, anchor="center")
+
+        
 
 
 def complete_signup():
@@ -97,10 +107,13 @@ def complete_signup():
     name = name_entry.get()
     email = email_entry.get()
     phone = phone_entry.get()
+    if checkbox_value.get() == "off":
+        role = "no"
+    else :
+        role = "yes"
     subprocess.run(['python', 'databases.py'])
-    db.insert_user_table(name, phone, email, password)
+    db.insert_user_table(name, phone, email, password,role)
     db.display()
-    
     # Display a success message
     tkmb.showinfo(title="Signup Successful", message=f"User {name} with email {email} and phone number {phone} has been registered successfully!")
 
@@ -111,12 +124,15 @@ def login():
     entered_password = user_pass.get()  # Get the user-entered password
     validate_password = db.check_password_exists(entered_password)
 
+
     if validate_username and validate_password:
         tkmb.showinfo(title="Login Successful", message="You have logged in Successfully")
         with open("username.txt", "w") as file:
             file.write(db.get_user_by_value(entered_username))
             file.close()
-        subprocess.run(['python', 'after_login.py'])
+        app.destroy()
+        import after_login
+        
         
     else:
         tkmb.showerror(title="Login Failed", message="Invalid Username or password")
