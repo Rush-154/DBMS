@@ -8,9 +8,9 @@ def display():
     for row in rows:
         print(row)
         
-def insert_user_table( name ,phone ,email ,password):
-    data = (name ,phone ,email ,password)
-    cursor.execute("INSERT INTO users (name, phone_no, email_id, password) VALUES (?, ?, ?, ?);", data)
+def insert_user_table( name ,phone ,email ,password,gfm_role):
+    data = (name ,phone ,email ,password,gfm_role)
+    cursor.execute("INSERT INTO users (name, phone_no, email_id, password,gfm_role) VALUES (?, ?, ?, ?, ?);", data)
     conn.commit()
 
 def check_name_exists(value):
@@ -38,7 +38,7 @@ def get_user_by_value(value):
     return result[0]  # Return the name of the user found
 
 # Connect to the database or create it if it doesn't exist
-conn = sqlite3.connect('Attendence.db')
+conn = sqlite3.connect('login_credentials.db')
 cursor = conn.cursor()
 
 # Check if the 'users' table exists
@@ -51,11 +51,8 @@ if not cursor.fetchone():
             name TEXT NOT NULL,
             phone_no INTEGER NOT NULL,
             email_id TEXT NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            gfm_role TEXT NOT NULL
         );
     ''')
     conn.commit()
-
-
-
-
