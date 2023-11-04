@@ -2,14 +2,23 @@ import customtkinter as ctk
 import time
 import flexcards as cards
 import databases as db
+import attendence as attd
+import subprocess
 
-
+emails = None
+name = None
 with open("username.txt", "r") as file:
     # Read the first line
-    first_line = file.readline()
-    first_line = db.get_name_by_value(first_line)
+    emails = file.readline()
+    name = db.get_name_by_value(emails)
     db.conn.close()
-username = 'Hello ' + first_line
+username = 'Hello ' + name
+if attd.check_email_exists(emails):
+    attd.insert_user(emails, name)
+attd.display_users()
+attd.conn.commit()
+attd.conn.close()
+
 
 def frontend_initiliesd():
     # Selecting GUI theme - dark, light, system (for system default)
