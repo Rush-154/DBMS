@@ -31,7 +31,13 @@ def check_password_exists(value):
     else:
         return 0  # Value not found
 
-def get_user_by_value(value):
+def get_email_id_by_value(value):
+    # Try to find the value in the user table
+    cursor.execute("SELECT email_id FROM users WHERE name = ? OR phone_no = ? OR email_id = ?", (value, value, value))
+    result = cursor.fetchone()  # Fetch the first matching row
+    return result[0]  # Return the name of the user found
+
+def get_name_by_value(value):
     # Try to find the value in the user table
     cursor.execute("SELECT name FROM users WHERE name = ? OR phone_no = ? OR email_id = ?", (value, value, value))
     result = cursor.fetchone()  # Fetch the first matching row
