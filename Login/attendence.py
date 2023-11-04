@@ -34,6 +34,22 @@ cursor.execute("""
     )
 """)
 #_________________________________________________________________________________________________________
+
+def insert_subject(subject_name, user_email):
+    data = (subject_name, user_email)
+    cursor.execute("INSERT INTO Subjects (Subject_Name, User_Email) VALUES (?, ?);", data)
+    conn.commit()
+
+def display_subjects():
+    cursor.execute("SELECT * FROM Subjects;")
+    rows = cursor.fetchall()
+    for row in rows:
+        print("Subject Name:", row[0])
+        print("User Email:", row[1])
+        print()  # Add an empty line for separation
+
+
+
 # Create the Subjects table
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS Subjects (
