@@ -1,9 +1,9 @@
 import customtkinter as ctk
 
-
-
-
-username = 'Hello ' + 'Aditya'
+with open("username.txt", "r") as file:
+    # Read the first line
+    first_line = file.readline()
+username = 'Hello ' + first_line
 
 def frontend_initiliesd():
     # Selecting GUI theme - dark, light, system (for system default)
