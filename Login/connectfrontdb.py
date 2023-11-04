@@ -18,6 +18,7 @@ signup_button = None
 or_label = None
 back_button = None
 checkbox_value = None
+checkbox = None
 
 
 #__________________________________________________________________________________________
@@ -52,7 +53,7 @@ def loginpage(app):
     signup_button.place(relx=0.58, rely=0.45, anchor="center")
 
 def login_or_signup(action):    
-    global user_entry, user_pass, name_entry, email_entry, phone_entry, complete_login_button, complete_signup_button, login_button, signup_button, or_label, back_button, checkbox_value
+    global user_entry, user_pass, name_entry, email_entry, phone_entry, complete_login_button, complete_signup_button, login_button, signup_button, or_label, back_button, checkbox_value,checkbox
     
     if action == "login":
         login_button.place_forget()
@@ -152,6 +153,9 @@ def back():
         email_entry.place_forget()
     if phone_entry:
         phone_entry.place_forget()
+    if checkbox:
+        checkbox.place_forget()
+        
 
     loginpage(app)
     
